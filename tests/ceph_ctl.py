@@ -198,6 +198,14 @@ class ExternalCephControl(CephControl):
         else:
             bootstrap = True
 
+        if cluster_count != 1:
+            raise SkipTest('ExternalCephControl does not do multiple clusters')
+
+        if config.has_option('testing', 'bootstrap'):
+            bootstrap = config.getboolean('testing', 'bootstrap')
+        else:
+            bootstrap = True
+
         if bootstrap:
             self._bootstrap(self.config['master_fqdn'])
 
